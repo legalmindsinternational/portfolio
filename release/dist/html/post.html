@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Blog post</title>
+    <link rel="stylesheet" href="/styles/base.css" />
+    <link rel="stylesheet" href="/styles/blogs.css" />
+    <link rel="stylesheet" href="/styles/post.css" />
+</head>
+
+<body>
+    <main class="container">
+        <a href="/html/blogs.html" class="back-link">← Back to blogs</a>
+        <div id="status" class="status" role="status" aria-live="polite">Loading…</div>
+
+        <article id="post" class="post-detail" hidden aria-live="polite">
+            <h1 id="postTitle"></h1>
+            <p class="meta" id="postMeta"></p>
+            <div id="postBody" class="post-body"></div>
+        </article>
+    </main>
+
+    <!-- Minimal footer that always sits at the bottom (see post.css) -->
+    <footer class="site-footer">
+        <div class="site-footer__inner">
+            <p>© 2025 Legal Minds International. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script type="module">
+        // config
+        const PB_URL = `${location.origin}`;
+        const COLLECTION = "blogs";
+
+        if (location.protocol === "https:" && PB_URL.startsWith("http://")) {
+            const s = document.getElementById("status");
+            s.textContent = "This page is HTTPS but the API is HTTP (blocked). Use http:// in dev or proxy PB over HTTPS.";
+        }
+
+        import PocketBase from "https://unpkg.com/pocketbase@0.21.2/dist/pocketbase.es.mjs";
+        const pb = new PocketBase(PB_URL);
+
+        const statusEl = document.getElementById("status");
+        const postEl = document.getElementById("post");
+        const titleEl = document.getElementById("postTitle");
+        const metaEl = document.getElementById("postMeta");
+        const bodyEl = document.getElementById("postBody");
+
+        function setStatus(msg) {
+            statusEl.textContent = msg || "";
+            statusEl.style.display = msg ? "block" : "none";
+        }
+
+        function escapeHtml(s) {
+            return String(s).replace(/[&<>"']/g, ch => ({
+                "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+            })[ch]);
+        }
+
+        function formatDate(iso) {
+            try {return new Date(iso).toLocaleString();} catch {return iso;}
+        }
+
+        // get id from query string
+        const params = new URLSearchParams(location.search);
+        const id = params.get("id");
+
+        if (!id) {
+            setStatus("No post id provided.");
+        } else {
+            fetchPost(id);
+        }
+
+        async function fetchPost(recordId) {
+            setStatus("Loading…");
+            try {
+                // getOne expects an id and optional options (expand etc.)
+                // We request the fields we know the API returns (title, author, date, status, summary, body)
+                const rec = await pb.collection(COLLECTION).getOne(recordId, {
+                    // expand: 'relField1,relField2.subRelField'
+                });
+
+                if (!rec || !rec.id) {
+                    setStatus("Post not found.");
+                    return;
+                }
+
+                // Map the common response fields
+                titleEl.textContent = rec.title || "Untitled";
+                const author = rec.author ? `<span class="author">${escapeHtml(rec.author)}</span>` : "";
+                const date = rec.date ? `<time datetime="${rec.date}">${formatDate(rec.date)}</time>` : "";
+                metaEl.innerHTML = `${author}${author && date ? " · " : ""}${date}`;
+
+                // Render stored HTML directly (you said body stores HTML)
+                // Do NOT insert the listing 'summary' here — listing summaries are for the index only.
+                if (rec.body) {
+                    bodyEl.innerHTML = rec.body;
+                } else {
+                    // No body stored — show a neutral placeholder
+                    bodyEl.innerHTML = "<p>(No content)</p>";
+                }
+
+                postEl.hidden = false;
+                setStatus("");
+            } catch (err) {
+                console.error(err);
+                setStatus("Failed to load post.");
+            }
+        }
+    </script>
+</body>
+
+</html>

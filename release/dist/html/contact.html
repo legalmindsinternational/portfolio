@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contact - Legal Minds International</title>
+    <link rel="stylesheet" href="/styles/base.css" />
+    <link rel="stylesheet" href="/styles/contact.css" />
+</head>
+
+<body>
+    <header>
+        <img class="logo" src="/assets/logo.jpeg" alt="Legal Minds logo">
+        <h1 class="header_name">Legal Minds International</h1>
+        <nav aria-label="Primary">
+            <a href="/html/home.html">Home</a>
+            <a href="/html/about.html">About</a>
+            <a href="/html/services.html">Services</a>
+            <a href="/html/blogs.html">Blogs</a>
+            <a href="/html/contact.html" class="active">Contact</a>
+        </nav>
+    </header>
+
+    <main id="contact_page">
+        <div class="contact_intro">
+            <h1>Get in <span class="highlight">Touch</span></h1>
+            <p>We’re here to listen and provide clear legal counsel.
+                Reach out to us via the form below or visit one of our offices.</p>
+        </div>
+
+        <!-- Contact Form -->
+        <form class="contact-form" onsubmit="sendMail(event)">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input id="name" name="name" type="text" required />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" required />
+                </div>
+            </div>
+
+            <!-- SUBJECT field added (message textarea left exactly as-is) -->
+            <div class="form-group full">
+                <label for="subject">Subject</label>
+                <input id="subject" name="subject" type="text" required />
+            </div>
+
+            <div class="form-group full">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="6" required></textarea>
+            </div>
+
+            <button type="submit">Send Message</button>
+        </form>
+
+        <!-- Offices -->
+        <div class="offices">
+            <div class="office_card">
+                <h2>Delhi Office</h2>
+                <p>109 A, Pocket-F<br>
+                    Mayur Vihar Phase-II<br>
+                    Delhi – 110024, India</p>
+                <p><strong>Phone:</strong> +91-98-11-30-65-59</p>
+                <p><strong>Tel:</strong> 011-43-50-86-97</p>
+                <a href="mailto:legalminds@gmail.com">info@legalmindsintl.com</a>
+            </div>
+
+            <div class="office_card">
+                <h2>Visakhapatnam Office</h2>
+                <p>402, Venu Regency Plaza<br>
+                    Near Raghavendra<br>
+                    Swami Temple<br>
+                    Waltair Uplands<br>
+                    Visakhapatnam – 530002, India</p>
+                <p><strong>Phone:</strong> +91-99-99-22-69-47</p>
+                <a href="mailto:avsmanyam76@gmail.com">avsmanyam76@gmail.com</a>
+            </div>
+        </div>
+
+        <p class="disclaimer">
+            * Submissions through this form do not establish an attorney-client relationship.
+        </p>
+    </main>
+
+    <footer id="site_footer" class="full-bleed">
+        <div class="footer_inner">
+            <div class="footer_brand">
+                <img src="/assets/logo.jpeg" alt="Legal Minds International logo" class="footer_logo">
+                <div class="footer_name">Legal Minds International</div>
+            </div>
+
+            <nav class="footer_cols" aria-label="Footer">
+                <div class="footer_col">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="blogs.html">Blogs</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer_col">
+                    <h3>Contact</h3>
+                    <address>
+                        <a href="mailto:legalminds@gmail.com">legalminds@gmail.com</a><br>
+                        Tel - 011-43-50-86-97<br>
+                        Phone - +91-9811306559<br>
+                        109 A, Pocket-F<br>
+                        Mayur Vihar Phase-II<br>
+                        Delhi – 110091, India
+                    </address>
+                </div>
+                <div class="footer_col">
+                    <h3>Also at</h3>
+                    <address>
+                        <a href="mailto:avsmanyam76@gmail.com">legalminds@gmail.com</a><br>
+                        Phone - +91-9999226947<br>
+                        402, Venu Regency Plaza<br>
+                        Near Raghavendra<br>
+                        Swamy Temple<br>
+                        Visakhapatnam – 530002, India
+                    </address>
+                </div>
+            </nav>
+        </div>
+
+        <div class="footer_bar">
+            <p>© 2025 Legal Minds International. All rights reserved.</p>
+            <nav class="footer_legal" aria-label="Legal">
+                <a href="/index.html">Disclaimer</a>
+            </nav>
+        </div>
+    </footer>
+    <script type="module">
+        // Header highlight (keeps your current behaviour)
+        const current = window.location.pathname.split("/").pop();
+        document.querySelectorAll("header nav a").forEach(link => {
+            if (link.getAttribute("href").endsWith(current)) {
+                link.classList.add("active");
+            }
+        });
+
+        // --- PocketBase client (browser ESM) ---
+        // Using the official PocketBase ESM build from unpkg so this works without bundling.
+        import PocketBase from 'https://unpkg.com/pocketbase/dist/pocketbase.es.mjs';
+
+        const POCKETBASE_URL = `${location.origin}`;
+        const COLLECTION_NAME = 'messages';
+
+        const pb = new PocketBase(POCKETBASE_URL);
+
+        const form = document.getElementById('contactForm') || document.querySelector('.contact-form');
+        if (!form) {
+            console.error('Contact form not found. Add id="contactForm" or class="contact-form" to your form element.');
+        } else {
+            let status = document.getElementById('formStatus');
+            if (!status) {
+                status = document.createElement('p');
+                status.id = 'formStatus';
+                status.style.display = 'none';
+                status.style.marginTop = '.5rem';
+                form.appendChild(status);
+            }
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                status.style.display = 'none';
+
+                // Honeypot (if you added <input id="hp" name="hp" ...> hidden in the form)
+                const hpField = form.querySelector('[name="hp"]');
+                if (hpField && hpField.value.trim() !== '') {
+                    // silent drop for bots
+                    return;
+                }
+
+                // Read values (preserves your existing textarea with id="message")
+                const name = (form.querySelector('[name="name"]') || {}).value?.trim() || '';
+                const email = (form.querySelector('[name="email"]') || {}).value?.trim() || '';
+                const subject = (form.querySelector('[name="subject"]') || {}).value?.trim() || '';
+                const message = (form.querySelector('[name="message"]') || {}).value?.trim() || '';
+
+                // Basic validation
+                if (!email || !subject || !message) {
+                    status.style.color = 'red';
+                    status.textContent = 'Please fill in your email, subject and message.';
+                    status.style.display = '';
+                    return;
+                }
+
+                // Prepare payload matching your PocketBase collection fields
+                const payload = {
+                    name,
+                    email,
+                    subject,
+                    message
+                };
+
+                try {
+                    // If your collection allows public create, this will work from the browser.
+                    // If not, keep collection locked and use a server proxy that calls PocketBase with Admin token.
+                    const record = await pb.collection(COLLECTION_NAME).create(payload);
+
+                    // Success
+                    status.style.color = 'green';
+                    status.textContent = 'Message received — thank you!';
+                    status.style.display = '';
+                    form.reset();
+
+                    // If you prefer the original behaviour to briefly reload the page, uncomment:
+                    // setTimeout(() => { window.location.reload(); }, 200);
+
+                    // Optional: log created record id for debugging
+                    console.log('PocketBase record created:', record.id);
+                } catch (err) {
+                    console.error('PocketBase create error:', err);
+                    // Try to show a user-friendly message
+                    let msg = 'Could not send message. Please try again later.';
+                    if (err?.response?.data?.data) {
+                        // pocketbase validation errors structure sometimes lives here
+                        msg = Object.values(err.response.data.data).flat().join(' ');
+                    } else if (err?.message) {
+                        msg = err.message;
+                    }
+                    status.style.color = 'red';
+                    status.textContent = msg;
+                    status.style.display = '';
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Disclaimer - Legal Minds International</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:wght@400;500;700&family=Merriweather:wght@400;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/styles/disclaimer.css">
+</head>
+
+<body>
+    <div class="disclaimer-box">
+        <h1>Disclaimer</h1>
+
+        <div class="disclaimer-text" id="disclaimerText">
+            <p>
+                The rules of the Bar Council of India do not permit law firms to solicit work or advertise in any
+                manner.
+                By clicking "Accept", you acknowledge that you are seeking information about Legal Minds International
+                on your own accord and that there has been no form of solicitation, advertisement or inducement
+                by the firm or its members.
+            </p>
+            <p>
+                The information provided on this website is for general informational purposes only and should not
+                be construed as legal advice. Legal Minds International disclaims all liability arising from reliance
+                on the information published herein.
+            </p>
+            <p>
+                This site may contain links to external websites. Legal Minds International is not responsible for
+                the content of such sites.
+            </p>
+            <p>
+                Please read this carefully before proceeding. By clicking "Accept", you confirm that you understand
+                and agree with the above.
+            </p>
+        </div>
+
+        <button id="acceptBtn" class="accept-btn" disabled>Accept & Continue</button>
+        <noscript style="color:#fff;display:block;margin-top:10px;text-align:center">
+            Please enable JavaScript to continue.
+        </noscript>
+    </div>
+
+    <!-- JS at bottom so DOM exists -->
+    <script>
+        (function () {
+            const acceptBtn = document.getElementById('acceptBtn');
+            const box = document.getElementById('disclaimerText');
+
+            function updateButtonState() {
+                // If content fits (no scrollbar), allow immediate accept
+                const scrollable = box.scrollHeight > box.clientHeight + 1;
+                if (!scrollable) {
+                    acceptBtn.disabled = false;
+                }
+            }
+
+            // Enable once user scrolls to bottom (only if scrollable)
+            box.addEventListener('scroll', () => {
+                if (box.scrollTop + box.clientHeight >= box.scrollHeight - 1) {
+                    acceptBtn.disabled = false;
+                }
+            });
+
+            // Also run after fonts/layout settle
+            window.addEventListener('load', updateButtonState);
+            // Fallback in case load fires before font metrics stabilize
+            setTimeout(updateButtonState, 300);
+
+            // Redirect to your actual home page
+            acceptBtn.addEventListener('click', () => {
+                // Make sure this path exists relative to index.html
+                window.location.href = '/html/home.html';
+            });
+        })();
+    </script>
+</body>
+
+</html>

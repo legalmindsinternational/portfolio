@@ -1,0 +1,246 @@
+#about_us {
+    background: #ffffff;
+    color: #000;
+    padding: 80px 20px;
+}
+
+.about_container {
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+
+#about_us h1 {
+    font-family: 'Merriweather', Georgia, serif;
+    font-size: 3rem;
+    font-weight: 800;
+    color: #122546;
+    /* navy */
+    margin-bottom: 60px;
+    text-align: center;
+    position: relative;
+}
+
+#about_us h1::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: #E6BE9A;
+    /* gold underline */
+    margin: 12px auto 0;
+    border-radius: 2px;
+}
+
+#about_us p {
+    font-family: 'Lato', Arial, sans-serif;
+    font-size: 1.4rem;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+#about_us strong {
+    color: #031b91;
+}
+
+
+#our_philosophy {
+    background: #122546;
+    /* navy */
+    color: #E6BE9A;
+    /* gold text */
+    padding: 100px 20px;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+}
+
+.philosophy_container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+    flex-wrap: wrap;
+    /* responsive stack */
+}
+
+.philosophy_text {
+    flex: 1;
+    min-width: 300px;
+}
+
+#our_philosophy h1 {
+    font-family: 'Merriweather', Georgia, serif;
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #ffffff;
+    /* white title for contrast */
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#our_philosophy p {
+    font-family: 'Lato', Arial, sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 18px;
+}
+
+#our_philosophy strong {
+    color: #ffffff;
+    /* highlight important terms in white */
+    font-weight: 700;
+}
+
+#our_philosophy em {
+    font-style: normal;
+    color: #E6BE9A;
+    /* gold highlight */
+    font-weight: 600;
+}
+
+.philosophy_image {
+    flex: 1;
+    min-width: 280px;
+}
+
+.philosophy_image img {
+    width: 100%;
+    max-height: 450px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+#areas_of_practice {
+    background: #ffffff;
+    /* white background */
+    color: #000;
+    padding: 80px 20px;
+}
+
+.practice_container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#areas_of_practice h1 {
+    font-family: 'Merriweather', Georgia, serif;
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #000;
+    margin-bottom: 50px;
+}
+
+#areas_of_practice .highlight {
+    color: #031b91;
+    /* deep blue highlight */
+}
+
+.practice_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    text-align: left;
+}
+
+.practice_item {
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 24px;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.practice_item:hover {
+    border-color: #031b91;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.practice_item h3 {
+    font-family: 'Merriweather', Georgia, serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #031b91;
+    margin-bottom: 12px;
+}
+
+.practice_item p {
+    font-family: 'Lato', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Partners Section */
+#our_partners {
+    background: #ffffff;
+    color: #000;
+    padding: 80px 20px;
+}
+
+.partners_container {
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#our_partners h1 {
+    font-family: 'Merriweather', Georgia, serif;
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #122546;
+    /* navy */
+    margin-bottom: 60px;
+}
+
+#our_partners .highlight {
+    color: #031b91;
+    /* deep blue */
+}
+
+.partner {
+    margin-bottom: 80px;
+    text-align: left;
+}
+
+.partner img {
+    width: 220px;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 6px;
+    display: block;
+    margin: 0 auto 20px auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.partner h2 {
+    font-family: 'Merriweather', Georgia, serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #031b91;
+    margin-bottom: 6px;
+    text-align: center;
+}
+
+.partner h3 {
+    font-family: 'Lato', Arial, sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #122546;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.partner p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #333;
+    margin-bottom: 16px;
+}

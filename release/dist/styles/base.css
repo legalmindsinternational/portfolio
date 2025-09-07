@@ -1,0 +1,255 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    line-height: 1.6;
+    color: #222;
+    background: #fff;
+}
+
+/* header */
+header {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    border-bottom: 1px solid #0b1224;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 80px;
+}
+
+header .logo {
+    width: 62px;
+    height: 62px;
+    object-fit: contain;
+}
+
+.header_name {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #0A2342;
+    white-space: nowrap;
+}
+
+header nav {
+    margin-left: auto;
+    display: flex;
+    gap: 32px;
+}
+
+header nav a {
+    color: #0A2342;
+    text-decoration: none;
+    padding: 6px 8px;
+    border-radius: 6px;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+header nav a:hover,
+header nav a:focus {
+    background: #f5f5f5;
+    color: #4169E1;
+}
+
+/* active link */
+header nav a.active {
+    background: #031b91;
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Footer */
+#site_footer {
+    background: #122546;
+    /* navy */
+    color: #E6BE9A;
+    /* gold text */
+    padding: 48px 20px 16px;
+    box-sizing: border-box;
+}
+
+#site_footer .footer_inner {
+    max-width: 1200px;
+    margin: 0 auto 24px auto;
+    display: grid;
+    grid-template-columns: minmax(240px, 1.2fr) 2fr;
+    gap: 32px 48px;
+    align-items: start;
+}
+
+/* Brand block */
+.footer_logo {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 6px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.footer_name {
+    font-family: 'Merriweather', Georgia, serif;
+    font-weight: 800;
+    font-size: 1.15rem;
+    letter-spacing: .5px;
+    margin-bottom: 6px;
+}
+
+.footer_tagline {
+    color: #f5e8d8;
+    margin: 0;
+    font-size: .95rem;
+}
+
+/* Columns */
+.footer_cols {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(180px, 1fr));
+    gap: 24px 32px;
+}
+
+.footer_col h3 {
+    font-family: 'Merriweather', Georgia, serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: .5px;
+    margin: 0 0 10px 0;
+    color: #ffffff;
+    /* brighter for headings */
+    text-transform: uppercase;
+}
+
+.footer_col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer_col li {
+    margin: 6px 0;
+}
+
+.footer_col a {
+    color: #E6BE9A;
+    text-decoration: none;
+}
+
+.footer_col a:hover {
+    text-decoration: underline;
+}
+
+/* Address styling */
+address {
+    font-style: normal;
+    line-height: 1.6;
+}
+
+address a {
+    color: #E6BE9A;
+    text-decoration: none;
+}
+
+address a:hover {
+    text-decoration: underline;
+}
+
+/* Bottom bar */
+.footer_bar {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 12px;
+
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.footer_bar p {
+    margin: 0;
+    font-size: .95rem;
+}
+
+.footer_legal {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.footer_legal a {
+    color: #E6BE9A;
+    text-decoration: none;
+    font-size: .95rem;
+    opacity: 0.95;
+}
+
+.footer_legal a:hover {
+    text-decoration: underline;
+    opacity: 1;
+}
+
+.footer_legal {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.footer_legal a {
+    color: #E6BE9A;
+    text-decoration: none;
+    font-size: .95rem;
+    opacity: 0.95;
+}
+
+.footer_legal a:hover {
+    text-decoration: underline;
+    opacity: 1;
+}
+
+/* Brand block */
+.footer_brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    /* spacing between logo and name */
+    margin-bottom: 12px;
+}
+
+.footer_logo {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+    /* keep logo fixed size */
+    margin-bottom: 0;
+    /* remove old bottom spacing */
+}
+
+.footer_name {
+    font-family: 'Merriweather', Georgia, serif;
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: .5px;
+    margin: 0;
+    /* tighter alignment */
+}
+
+.footer_tagline {
+    color: #f5e8d8;
+    margin: 4px 0 0 68px;
+    /* indent tagline under the text, aligned with firm name */
+    font-size: .95rem;
+}

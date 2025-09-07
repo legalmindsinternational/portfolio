@@ -1,0 +1,104 @@
+/* Page Layout */
+#services_page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 20px;
+    font-family: 'Lato', Arial, sans-serif;
+    line-height: 1.8;
+    color: #000000;
+    /* body text black */
+    background: #ffffff;
+    /* clean white background */
+}
+
+/* Main Page Title */
+#services_page h1 {
+    text-align: center;
+    font-family: 'Merriweather', Georgia, serif;
+    font-size: 3rem;
+    font-weight: 800;
+    color: #122546;
+    /* navy */
+    margin-bottom: 60px;
+    position: relative;
+}
+
+
+#services_page h1::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: #E6BE9A;
+    /* deep blue underline */
+    margin: 12px auto 0;
+    border-radius: 2px;
+}
+
+/* Each Service Section */
+#services_page section {
+    margin-bottom: 80px;
+}
+
+#services_page h2 {
+    font-family: 'Merriweather', Georgia, serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #031b91;
+    /* deep blue */
+    margin-bottom: 20px;
+}
+
+/* Paragraphs */
+#services_page p {
+    font-size: 1.1rem;
+    margin-bottom: 18px;
+    color: #333333;
+}
+
+#services_page strong {
+    color: #031b91;
+    /* highlight important bodies/laws in deep blue */
+    font-weight: 700;
+}
+
+#services_page em {
+    font-style: italic;
+    /* simple italic, no gold */
+    font-weight: 500;
+    color: #333333;
+    /* keep natural text tone */
+}
+
+/* Lists if needed */
+#services_page ul {
+    margin: 16px 0 24px 20px;
+    padding: 0;
+}
+
+#services_page li {
+    margin-bottom: 10px;
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #services_page {
+        padding: 50px 16px;
+    }
+
+    #services_page h1 {
+        font-size: 2.2rem;
+        margin-bottom: 40px;
+    }
+
+    #services_page h2 {
+        font-size: 1.5rem;
+        margin-bottom: 16px;
+    }
+
+    #services_page p {
+        font-size: 1rem;
+    }
+}

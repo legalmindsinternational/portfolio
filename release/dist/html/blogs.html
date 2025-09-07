@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Blogs - Legal Minds International</title>
+    <link rel="stylesheet" href="/styles/base.css" />
+    <link rel="stylesheet" href="/styles/blogs.css" />
+</head>
+
+<body>
+    <header>
+        <img class="logo" src="/assets/logo.jpeg" alt="Legal Minds logo">
+        <h1 class="header_name">Legal Minds International</h1>
+        <nav aria-label="Primary">
+            <a href="/html/home.html">Home</a>
+            <a href="/html/about.html">About</a>
+            <a href="/html/services.html">Services</a>
+            <a class="active" href="/html/blogs.html">Blogs</a>
+            <a href="/html/contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <main class="blogs_page">
+        <h1 class="page-title">Blogs</h1>
+
+        <div class="controls">
+            <label for="sortBy">Sort by</label>
+            <select id="sortBy" aria-label="Sort blog posts">
+                <option value="-date">Newest first</option>
+                <option value="date">Oldest first</option>
+            </select>
+        </div>
+
+        <div id="status" class="status" role="status" aria-live="polite">Loading…</div>
+
+        <ul id="posts" class="posts" role="list"></ul>
+
+        <div class="more-row">
+            <button id="loadMore" class="btn" type="button">Load more</button>
+        </div>
+    </main>
+
+    <footer id="site_footer" class="full-bleed">
+        <div class="footer_inner">
+            <div class="footer_brand">
+                <img src="/assets/logo.jpeg" alt="Legal Minds International logo" class="footer_logo">
+                <div class="footer_name">Legal Minds International</div>
+            </div>
+
+            <nav class="footer_cols" aria-label="Footer">
+                <div class="footer_col">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="blogs.html">Blogs</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer_col">
+                    <h3>Contact</h3>
+                    <address>
+                        <a href="mailto:legalminds@gmail.com">legalminds@gmail.com</a><br>
+                        Tel - 011-43-50-86-97<br>
+                        Phone - +91-9811306559<br>
+                        109 A, Pocket-F<br>
+                        Mayur Vihar Phase-II<br>
+                        Delhi – 110091, India
+                    </address>
+                </div>
+                <div class="footer_col">
+                    <h3>Also at</h3>
+                    <address>
+                        <a href="mailto:avsmanyam76@gmail.com">legalminds@gmail.com</a><br>
+                        Phone - +91-9999226947<br>
+                        402, Venu Regency Plaza<br>
+                        Near Raghavendra<br>
+                        Swamy Temple<br>
+                        Visakhapatnam – 530002, India
+                    </address>
+                </div>
+            </nav>
+        </div>
+
+        <div class="footer_bar">
+            <p>© 2025 Legal Minds International. All rights reserved.</p>
+            <nav class="footer_legal" aria-label="Legal">
+                <a href="/index.html">Disclaimer</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script type="module">
+        // Highlight current page link (minimal)
+        (function highlightCurrent() {
+            try {
+                const current = window.location.pathname.split("/").pop();
+                document.querySelectorAll("header nav a").forEach(link => {
+                    const href = link.getAttribute("href") || "";
+                    if (href.endsWith(current)) link.classList.add("active");
+                });
+            } catch (e) {
+                console.error("highlightCurrent error:", e);
+            }
+        })();
+
+        // ====== config ======
+        const PB_URL = `${location.origin}`;
+        const COLLECTION = "blogs";
+        const PER_PAGE = 10;
+        // ====================
+
+        // Dev hint: if the page is HTTPS and PB_URL is http:// the browser will block requests.
+        if (location.protocol === "https:" && PB_URL.startsWith("http://")) {
+            const s = document.getElementById("status");
+            if (s) s.textContent = "This page is HTTPS but the API is HTTP (blocked). Use http:// in dev or proxy PB over HTTPS.";
+        }
+
+        import PocketBase from "https://unpkg.com/pocketbase@0.21.2/dist/pocketbase.es.mjs";
+        const pb = new PocketBase(PB_URL);
+
+        // DOM elements (defensive)
+        const postsEl = document.getElementById("posts");
+        const statusEl = document.getElementById("status");
+        const moreBtn = document.getElementById("loadMore");
+        const sortSel = document.getElementById("sortBy");
+
+        if (!postsEl || !statusEl || !moreBtn || !sortSel) {
+            console.error("Required DOM elements missing:", {postsEl: !!postsEl, statusEl: !!statusEl, moreBtn: !!moreBtn, sortSel: !!sortSel});
+        }
+
+        let page = 1;
+        let totalPages = 1;
+        let currentSort = sortSel ? sortSel.value : "-date";
+        let loading = false;
+
+        if (sortSel) {
+            sortSel.addEventListener("change", () => {
+                currentSort = sortSel.value;
+                page = 1;
+                fetchPage(true);
+            });
+        }
+
+        if (moreBtn) {
+            moreBtn.addEventListener("click", () => {
+                if (page < totalPages) {
+                    page += 1;
+                    fetchPage(false);
+                }
+            });
+        }
+
+        function setStatus(msg) {
+            if (!statusEl) return;
+            statusEl.textContent = msg || "";
+            statusEl.style.display = msg ? "block" : "none";
+        }
+
+        function escapeHtml(s) {
+            // safe escaping for strings inserted into textContent/HTML (for summaries)
+            return String(s).replace(/[&<>"']/g, function (ch) {
+                return ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"})[ch];
+            });
+        }
+
+        function formatDate(iso) {
+            try {return new Date(iso).toLocaleString();} catch {return iso;}
+        }
+
+        function postItem(rec) {
+            const li = document.createElement("li");
+            li.className = "post";
+
+            const detailUrl = new URL("post.html", window.location.href);
+            detailUrl.searchParams.set("id", rec.id);
+
+            const title = escapeHtml(rec.title || "Untitled");
+            const author = rec.author ? `<span class="author">${escapeHtml(rec.author)}</span>` : "";
+            const date = rec.date ? `<time datetime="${rec.date}">${formatDate(rec.date)}</time>` : "";
+            const summary = rec.summary ? `<p class="summary">${escapeHtml(rec.summary)}</p>` : "";
+
+            li.innerHTML = `
+      <h3 class="title">${title}</h3>
+      <p class="meta">${author}${author && date ? " · " : ""}${date}</p>
+      ${summary}
+      <p class="actions">
+        <a class="readmore" href="${detailUrl.toString()}" aria-label="Read ${title}">Read more →</a>
+      </p>
+    `;
+            return li;
+        }
+
+        async function fetchPage(replace) {
+            if (!postsEl || !statusEl || !moreBtn) return;
+            if (loading) return;
+            loading = true;
+
+            if (replace) {
+                setStatus("Loading…");
+                postsEl.innerHTML = "";
+            } else {
+                setStatus("Loading more…");
+            }
+            moreBtn.disabled = true;
+
+            try {
+                const res = await pb.collection(COLLECTION).getList(page, PER_PAGE, {
+                    filter: "status = 'published'",
+                    sort: currentSort,
+                    fields: "id,title,author,date,summary,status"
+                });
+
+                totalPages = res.totalPages || 1;
+
+                if (replace) postsEl.innerHTML = "";
+                if (!res.items.length && replace) {
+                    setStatus("No blog posts yet.");
+                } else {
+                    setStatus("");
+                    const frag = document.createDocumentFragment();
+                    res.items.forEach(rec => frag.appendChild(postItem(rec)));
+                    postsEl.appendChild(frag);
+                }
+
+                moreBtn.style.display = page >= totalPages ? "none" : "inline-flex";
+                moreBtn.disabled = page >= totalPages;
+            } catch (err) {
+                console.error("fetchPage error:", err);
+                setStatus("Failed to load blogs.");
+            } finally {
+                loading = false;
+            }
+        }
+
+        // init
+        fetchPage(true);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,135 @@
+/* post.css — minimal layout + title & meta styling only.
+   DOES NOT restyle the stored HTML inside .post-body.
+*/
+
+/* layout / box-sizing */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* page column so footer stays at bottom */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: #fff;
+    color: #222;
+}
+
+/* main grows to push footer */
+main.container {
+    flex: 1 0 auto;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* back link (minimal) */
+.back-link {
+    display: inline-block;
+    margin: 1.2rem 0;
+    color: inherit;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* post wrapper: controls width and spacing only */
+.post-detail {
+    max-width: 800px;
+    margin: 0 auto 2rem auto;
+    padding: 0;
+    line-height: 1.5;
+    /* mild line-height for long content */
+    color: inherit;
+    background: transparent;
+    box-sizing: border-box;
+}
+
+/* ===== Styled elements (title, author, date-time) ===== */
+
+/* Title ONLY (targets the H1 inside the .post-detail, not global H1) */
+.post-detail>h1,
+.post-detail h1#postTitle {
+    font-size: 1.9rem;
+    margin: 0 0 0.4rem 0;
+    line-height: 1.15;
+    font-family: 'Merriweather', Georgia, serif;
+    /* optional — uses site fonts */
+    font-weight: 700;
+    color: #122546;
+}
+
+/* Meta container spacing (author and date-time sit here) */
+.post-detail .meta {
+    margin: 0 0 1rem 0;
+    color: #666;
+    font-size: 0.95rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Author inline styling (kept minimal) */
+.post-detail .meta .author {
+    font-weight: 600;
+    color: #0A2342;
+}
+
+/* Date/time element styling */
+.post-detail .meta time {
+    color: #6b7280;
+    font-size: 0.92rem;
+}
+
+/* Small separator between author and time (if both present) */
+.post-detail .meta .sep {
+    color: #999;
+    margin: 0 0.25rem;
+}
+
+/* IMPORTANT: do not add any rules targeting .post-detail .post-body children.
+   That ensures stored HTML renders using base.css and browser defaults. */
+
+/* Footer layout (keeps footer at bottom) */
+.site-footer {
+    flex-shrink: 0;
+    padding: 1rem 0;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    border-top: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.site-footer__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    color: #666;
+    font-size: 0.95rem;
+}
+
+/* Small screens */
+@media (max-width: 640px) {
+    .post-detail {
+        padding: 0 0.5rem;
+        margin: 0.75rem auto 1.25rem auto;
+        font-size: 1rem;
+    }
+
+    .back-link {
+        margin: 0.75rem 0;
+    }
+}

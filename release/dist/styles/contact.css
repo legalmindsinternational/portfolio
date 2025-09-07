@@ -1,0 +1,164 @@
+/* Contact Page */
+#contact_page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 80px 20px;
+    font-family: 'Lato', Arial, sans-serif;
+    color: #000;
+    background: #fff;
+}
+
+/* Intro */
+.contact_intro {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.contact_intro h1 {
+    font-family: 'Merriweather', Georgia, serif;
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    color: #000;
+}
+
+.contact_intro .highlight {
+    color: #031b91;
+    /* deep navy */
+}
+
+.contact_intro p {
+    font-size: 1.15rem;
+    color: #333;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Form */
+.contact-form {
+    margin-bottom: 80px;
+}
+
+.form-grid {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.form-group.full {
+    flex: 100%;
+}
+
+.contact-form label {
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 6px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: 'Lato', Arial, sans-serif;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: #031b91;
+    outline: none;
+    box-shadow: 0 0 3px rgba(3, 27, 145, 0.25);
+}
+
+/* Send Button - Navy + Gold */
+.contact-form button {
+    background: #031b91;
+    /* navy */
+    color: #E6BE9A;
+    /* gold text */
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 4px;
+    cursor: pointer;
+    align-self: flex-start;
+}
+
+/* Offices */
+.offices {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.office_card {
+    flex: 1;
+    min-width: 280px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 24px;
+    text-align: left;
+    background: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.office_card h2 {
+    font-family: 'Merriweather', Georgia, serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #000;
+}
+
+.office_card p {
+    margin: 6px 0;
+    font-size: 1rem;
+    color: #333;
+}
+
+.office_card a {
+    display: inline-block;
+    margin-top: 8px;
+    color: #031b91;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.office_card a:hover {
+    text-decoration: underline;
+}
+
+/* Disclaimer */
+.disclaimer {
+    margin-top: 40px;
+    font-size: 0.9rem;
+    color: #666;
+    text-align: center;
+    font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #contact_page {
+        padding: 50px 16px;
+    }
+
+    .form-grid {
+        flex-direction: column;
+    }
+
+    .offices {
+        flex-direction: column;
+        gap: 20px;
+    }
+}

@@ -1,0 +1,235 @@
+/* /styles/blogs.css
+   Stacked, broad blog list layout.
+   - Scoped only to page classes/IDs (does not touch header/footer or global headings).
+*/
+
+/* Local variables (scoped to this file) */
+:root {
+    --muted: #6b7280;
+    --separator: #e9edf3;
+    --accent: #031b91;
+    --text: #122546;
+    --excerpt: #333;
+    --cta: #031b91;
+}
+
+/* Make the content area a bit broader for a roomy stacked feel */
+.container {
+    max-width: 980px;
+    /* broader than before */
+    margin: 0 auto;
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Page wrapper (scoped) */
+.blogs_page {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 12px 20px 32px;
+    box-sizing: border-box;
+}
+
+/* Page title (class only) */
+.page-title {
+    text-align: center;
+    font-family: 'Merriweather', Georgia, serif;
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--text);
+    margin: 40px 0 28px;
+    padding-top: 50px;
+}
+
+.page-title::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: #E6BE9A;
+    margin: 12px auto 0;
+    border-radius: 2px;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 12px 0 18px;
+}
+
+.controls label {
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.controls select {
+    padding: 8px 10px;
+    border: 1px solid #e6e9ef;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 0.95rem;
+}
+
+/* status */
+#status.status {
+    margin: 10px 0 18px;
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+/* Posts list becomes a vertical stack (single column) */
+.posts {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: block;
+}
+
+/* Each post is a wide row with generous spacing and a subtle separator */
+.post {
+    display: block;
+    padding: 20px 8px;
+    border-bottom: 1px solid var(--separator);
+    margin: 0;
+    box-sizing: border-box;
+    background: transparent;
+    /* no card background */
+}
+
+/* Make titles more prominent in the stack */
+.post .title {
+    margin: 0 0 8px 0;
+    font-size: 1.45rem;
+    line-height: 1.15;
+    color: var(--text);
+    font-weight: 700;
+}
+
+/* Meta line — author / date */
+.post .meta {
+    margin: 0 0 12px 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+/* Summary/excerpt more readable and slightly broader */
+.post .summary {
+    margin: 0 0 12px 0;
+    color: var(--excerpt);
+    font-size: 1.03rem;
+    line-height: 1.6;
+    max-width: 100%;
+}
+
+/* actions: put readmore at the end of the line */
+.post .actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+/* readmore link style */
+.readmore {
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px solid transparent;
+    color: var(--cta);
+    padding-bottom: 2px;
+}
+
+.readmore:hover {
+    border-color: var(--cta);
+    text-decoration: none;
+}
+
+/* Load more button centered and roomy */
+.more-row {
+    display: flex;
+    justify-content: center;
+    padding: 22px 0;
+}
+
+.btn {
+    padding: 10px 16px;
+    border: 1px solid var(--cta);
+    background: var(--cta);
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Responsive adjustments — keep stack comfortable on small screens */
+@media (max-width: 880px) {
+
+    .container,
+    .blogs_page {
+        max-width: 100%;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .page-title {
+        font-size: 2rem;
+        margin-top: 28px;
+        margin-bottom: 18px;
+        padding-top: 28px;
+    }
+
+    .post {
+        padding: 16px 0;
+    }
+
+    .post .title {
+        font-size: 1.2rem;
+    }
+
+    .post .summary {
+        font-size: 1rem;
+    }
+
+    .post .actions {
+        justify-content: flex-start;
+        margin-top: 10px;
+    }
+}
+
+/* Small screens */
+@media (max-width: 480px) {
+    .page-title {
+        font-size: 1.6rem;
+        padding-top: 20px;
+    }
+
+    .post {
+        padding: 14px 0;
+    }
+
+    .post .title {
+        font-size: 1.05rem;
+    }
+
+    .post .summary {
+        font-size: 0.98rem;
+        line-height: 1.5;
+    }
+}
+
+/* Utility: visually-hidden scoped inside blogs area if needed */
+.blogs_page .visually-hidden {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+    white-space: nowrap;
+}
