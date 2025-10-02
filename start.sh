@@ -14,7 +14,7 @@ _term() {
 trap _term SIGINT SIGTERM
 
 echo "Starting PocketBase on 127.0.0.1:8090 ..."
-./pocketbase serve --http="127.0.0.1:8090" &
+./pocketbase serve --dir="/data" --http="127.0.0.1:8090" &
 
 PB_PID=$!
 
