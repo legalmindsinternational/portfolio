@@ -25,6 +25,3 @@ primary_region = 'bom'
 [[mounts]]
 source = "pb_data"
 destination = "/data"
-
-[processes]
-app = "/app/pocketbase serve --dir /data"
