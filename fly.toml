@@ -24,4 +24,4 @@ primary_region = 'bom'
 
 [[mounts]]
 source = "pb_data"
-destination = "/data"
+destination = "/app/release"
