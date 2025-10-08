@@ -4,7 +4,7 @@ FROM alpine:3.18
 RUN apk add --no-cache nginx bash ca-certificates
 
 # Create dirs
-RUN mkdir -p /app/release /var/log/nginx /run/nginx
+RUN mkdir -p /var/log/nginx /run/nginx
 
 WORKDIR /app/release
 
